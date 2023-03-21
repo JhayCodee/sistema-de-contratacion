@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewBag.Title = "AgregarCargo";
+}
+
+<h2 class="text-center text-info shadow-h pd">Agregar Cargo</h2>
+
+<form id="miFormularioCargo" method="post" action="@Url.Action("AgregarCargo", "Cargos")" enctype="multipart/form-data">
+
+    <div class="shadow-custom pd m-t">
+
+        <div class="row my-2">
+
+            <div class="col-xs-12 col-sm-6 w-auto">
+                <div class="form-group">
+                    <label for="Codigo" class="form-label">Codigo Cargo:</label>
+                    <input type="text" name="CodigoCargo" id="Codigo" class="form-control" remote="@Url.Action("ValidarCodigoCargo", "Cargos")">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 w-auto">
+                <div class="form-group">
+                    <label for="Nombre" class="form-label">Nombre Cargo:</label>
+                    <input type="text" name="NombreCargo" id="Nombre" class="form-control">
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row my-2">
+
+            <div class="col-xs-12 col-sm-6 w-auto">
+                <div class="form-group">
+                    <label for="ri" class="form-label">Rango Salarial Inicial:</label>
+                    <input type="Number" name="RangoSalarioInicial" id="ri" class="form-control" value="0">
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 w-auto">
+                <div class="form-group">
+                    <label for="rf" class="form-label">Rango Salarial Final:</label>
+                    <input type="Number" name="RangoSalarialFinal" id="rf" class="form-control" value="0">
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary my-1 w-100">Agregar</button>
+            @Html.ActionLink("Cancelar", "Index", "Cargos", null, new { @class = "btn btn-danger my-1 w-100" })
+        </div>
+
+    </div>
+
+</form>
+
+
+@section scripts
+{
+
+    <script>
+        var mcg = '@ViewBag.Message';
+        var alertType = '@ViewBag.AlertType';
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            if (mcg != "") {
+                if (alertType == "success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: mcg
+                    }).then(function () {
+                        window.location = "/Cargos/Index";
+                    });
+                } else if (alertType == "error") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: mcg
+                    });
+                }
+            }
+        });
+
+    </script>
+
+    <script>
+
+        $.validator.addMethod("maxSalarioInicial", function (value, element, params) {
+            var salarioInicial = parseFloat(value);
+            var salarioFinal = parseFloat($(params).val());
+            return salarioInicial <= salarioFinal;
+        }, "El salario inicial no puede ser mayor que el salario final.");
+
+        $("#miFormularioCargo").validate({
+
+            rules: {
+                CodigoCargo: {
+                    required: true,
+                    maxlength: 16,
+                    minlength: 2,
+                    remote: {
+                        url: '/Cargos/ValidarCodigoCargo',
+                        type: 'post',
+                        data: {
+                            codigo: function () {
+                                return $('#Codigo').val();
+                            }
+                        }
+                    },
+                },
+                NombreCargo: {
+                    required: true,
+                    maxlength: 50,
+                    minlength: 2
+                },
+                RangoSalarioInicial: {
+                    required: true,
+                    number: true,
+                    min: 0,
+                    maxSalarioInicial: "#rf",
+                },
+                RangoSalarialFinal: {
+                    required: true,
+                    number: true,
+                    min: 0,
+                },
+            },
+            messages: {
+                CodigoCargo: {
+                    required: "Por favor, ingrese un codigo.",
+                    maxlength: "El codigo no puede tener más de {0} caracteres.",
+                    minlength: "El nombre no puede tener menos de 2 caracteres",
+                    remote: "El codigo de area ya existe."
+                },
+                NombreCargo: {
+                    required: "Por favor, ingrese una Nombre de cargo.",
+                    maxlength: "El nombre no puede tener más de {0} caracteres.",
+                    minlength: "El nombre no puede tener menos de 2 caracteres"
+                },
+                RangoSalarioInicial: {
+                    required: "Por favor ingrese el salario",
+                    number: "Por favor ingrese un valor numérico",
+                    min: "El salario no debe ser menor que cero",
+                    maxSalarioInicial: "El salario inicial no puede ser mayor que el salario final."
+                },
+                RangoSalarialFinal: {
+                    required: "Por favor ingrese el salario",
+                    number: "Por favor ingrese un valor numérico",
+                    min: "El salario no debe ser menor que cero"
+                },
+            },
+        });
+
+    </script>
+
+
+
+}
+

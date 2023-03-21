@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewBag.Title = "AgregarTipoContrato";
+}
+
+<h2 class="text-center text-info shadow-h pd">Agregar Tipo Contrato</h2>
+
+<form id="miFormularioTP" method="post" action="@Url.Action("AgregarTipoContrato", "TipoContrato")" enctype="multipart/form-data">
+
+    <div class="shadow-custom pd m-t">
+
+        <div class="row my-2">
+
+            <div class="col-xs-12 col-sm-6 w-auto">
+                <div class="form-group">
+                    <label for="Nombre" class="form-label">Nombre tipo contrato:</label>
+                    <input type="text" name="NombreTipoContrato" id="Nombre" class="form-control">
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 w-auto">
+                <div class="form-group">
+                    <label for="" class="form-label">Aplica Aguinaldo:</label>
+                    <div style="display:flex; gap:10px;">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="AplicaAguinaldo" id="optionsRadios1" value="true" checked>
+                                Si
+                            </label>
+                        </div>
+                        <div class="radio" style="display:flex; align-items:center; margin:0;">
+                            <label>
+                                <input type="radio" name="AplicaAguinaldo" id="optionsRadios2" value="false">
+                                No
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row my-2">
+
+            <div class="col-xs-12 col-sm-6 w-auto">
+                <div class="form-group">
+                    <label for="" class="form-label">Aplica Indemnizacion:</label>
+                    <div style="display:flex; gap:10px;">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="AplicaIndemnizacion" id="optionsRadios1" value="true" checked>
+                                Si
+                            </label>
+                        </div>
+                        <div class="radio" style="display:flex; align-items:center; margin:0;">
+                            <label>
+                                <input type="radio" name="AplicaIndemnizacion" id="optionsRadios2" value="false">
+                                No
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary my-1 w-100">Agregar</button>
+            @Html.ActionLink("Cancelar", "Index", "TipoContrato", null, new { @class = "btn btn-danger my-1 w-100" })
+        </div>
+
+    </div>
+
+</form>
+
+@section scripts
+{
+
+    <script>
+        var mtp = '@ViewBag.Message';
+        var alertType = '@ViewBag.AlertType';
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            if (mtp != "") {
+                if (alertType == "success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: mtp
+                    }).then(function () {
+                        window.location = "/TipoContrato/Index";
+                    });
+                } else if (alertType == "error") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: mtp
+                    });
+                }
+            }
+        });
+
+    </script>
+
+    <script>
+
+        $("#miFormularioTP").validate({
+
+            rules: {
+                NombreTipoContrato: {
+                    required: true,
+                    maxlength: 50,
+                    minlength: 2
+                },
+            },
+            messages: {
+                NombreTipoContrato: {
+                    required: "Por favor, ingrese una Nombre de contrato.",
+                    maxlength: "El nombre no puede tener más de {0} caracteres.",
+                    minlength: "El nombre no puede tener menos de 2 caracteres"
+                },
+            },
+        });
+
+    </script>
+
+
+
+}

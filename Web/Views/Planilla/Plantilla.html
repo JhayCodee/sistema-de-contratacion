@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Title of the document</title>
+    <style>
+        table.border {
+            border-collapse: collapse;
+        }
+
+            table.border th {
+                padding: 5px;
+                border: 1px solid black;
+            }
+
+            table.border td {
+                padding: 5px;
+                border: 1px solid black;
+            }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <table style="width:100%; margin: 0 auto;">
+        <tr>
+            <td style="width:20%"></td>
+            <td style="width:65%">
+                <table style="margin: 0 auto;">
+                    <tr style="display: flex; justify-content: center;"><td align="center"><h4 style="margin:0px">JUEGAOK - SISTEMA DE NOMINA   </h4></td></tr>
+                </table>
+            </td>
+            <td style="width:25%">
+                <table class="" style="width:100%;">
+                    <tr><td align="center"></td></tr>
+                    <tr><td align="center" style="background-color:#D8D8D8">Periodo</td></tr>
+                    <tr><td align="center" style="font-size: 12px;">@rango</td></tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr><td colspan="3" height="20"></td></tr>
+
+        <tr>
+            <td colspan="3">
+
+                <table style="width: 100%; font-size: 13px;">
+                    <tr>
+                        <td>Id: @CodigoNombre</td>
+                        <td>Tipo Contrato: @TipoContrato</td>
+                    </tr>
+                    <tr><td colspan="3" height="10"></td></tr>
+                    <tr>
+                        <td>Cargo: @Cargo</td>
+                        <td>SalarioMesual: @SalarioMensual</td>
+                    </tr>
+                    <tr><td colspan="3" height="10"></td></tr>
+                    <tr>
+                        <td>Area: @Area</td>
+                        <td>FechaIngreso: @FechaIngreso</td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+
+        <tr><td colspan="3" height="30"></td></tr>
+
+        <tr style="font-size: 13px;">
+            <td colspan="3">
+                <Table class="border" style="width: 100%;">
+                    <tr style="background-color:#D8D8D8">
+                        <td align="center">Ingresos</td>
+                        <td align="center">Deducciones</td>
+                    </tr>
+
+                    <tr>
+                        <td style="margin: 0; padding: 0;">
+                            <table class="border" style="width: 100%;">
+                                <tr>
+                                    <td>Salario:</td>
+                                    <td align="right">@Salario</td>
+                                </tr>
+                                <tr>
+                                    <td>Antiguedad:</td>
+                                    <td align="right">@Ant</td>
+                                </tr>
+                                <tr style="color: white;">
+                                    <td>Total Ingresos:</td>
+                                    <td align="right">@Total</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Ingresos:</td>
+                                    <td align="right">@Total</td>
+                                </tr>
+                                <tr style="color: white;">
+                                    <td>Total Ingresos:</td>
+                                    <td align="right">@Total</td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="margin: 0; padding: 0;">
+                            <table class="border" style="width: 100%;">
+                                <tr>
+                                    <td>INSS:</td>
+                                    <td align="right">@INSS</td>
+                                </tr>
+                                <tr>
+                                    <td>IR:</td>
+                                    <td align="right">@IR</td>
+                                </tr>
+                                <tr style="color: white;">
+                                    <td>Total Ingresos:</td>
+                                    <td align="right">@Total</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Deducciones:</td>
+                                    <td align="right">@Deducciones</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Neto:</td>
+                                    <td align="right">@Neto   </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                    </tr>
+
+                </Table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

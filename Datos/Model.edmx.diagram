@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="22c856e227634c81b0c4d67e5f235a40" Name="Diagram1" ZoomLevel="71">
+        <EntityTypeShape EntityType="BD_PRUEBA.Areas" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_PRUEBA.Cargos" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_PRUEBA.Contrato" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_PRUEBA.Empleados" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_PRUEBA.TipoContrato" Width="1.5" PointX="0.75" PointY="12.625" IsExpanded="true" />
+        <AssociationConnector Association="BD_PRUEBA.FK_Contrato_Areas" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_PRUEBA.FK_Contrato_Cargos" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_PRUEBA.FK_Contrato_Empleados" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_PRUEBA.FK_Contrato_TipoContrato" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

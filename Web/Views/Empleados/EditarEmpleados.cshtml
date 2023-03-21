@@ -1,0 +1,291 @@
+﻿@using Modelos;
+@using Modelos;
+
+<!-- Your view content here -->
+
+@model Tuple<List<ObtenerEmpleados_VM>, List<AreaCargoTipoContrato_VM>>
+
+
+
+<div class="row pd shadow-h">
+    <h2 class="text-center">Editar Empleado</h2>
+</div>
+
+@if (@Model.Item1 != null && @Model.Item2 != null)
+{
+
+    <form class="row shadow-custom pd m-t" id="miFormularioE" method="post" action="@Url.Action("EditarEmpleados", "Empleados")" enctype="multipart/form-data">
+
+
+        <div class="col-lg-3 col-md-12 center flex-column">
+
+            <div class="w-auto h-auto">
+                <img src="@Model.Item1[0].Fotografia" alt="Imagen" width="200" class="imgE" id="img" />
+            </div>
+
+
+            <div class="w-auto my-2">
+                @*<label for="fotografia" class="form-label">Fotografia</label>*@
+                <input type="file" class="form-control" id="fotografia" name="foto">
+                <input type="hidden" name="Fotografia" value="@Model.Item1[0].Fotografia">
+                <div class="invalid-feedback"></div>
+
+            </div>
+
+        </div>
+
+
+        <input type="hidden" value="@Model.Item1[0].IdEmpleado" name="IdEmpleado" />
+
+        <div class="col-lg-9 col-md-12 m-t">
+
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-6 w-auto">
+                    <div class="form-group">
+                        <label for="Nombres" class="form-label">Nombre:</label>
+                        <input type="text" name="Nombres" id="Nombres" class="form-control" value="@Model.Item1[0].Nombres">
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 w-auto">
+                    <div class="form-group">
+                        <label for="Apellidos" class="form-label">Apellidos:</label>
+                        <input type="text" name="Apellidos" id="Apellidos" class="form-control" value="@Model.Item1[0].Apellidos">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-6 w-auto">
+
+                    <div class="form-group">
+                        <label for="EmailPersonal" class="form-label">Email personal:</label>
+                        <input type="email" name="EmailPersonal" id="EmailPersonal" class="form-control" value="@Model.Item1[0].EmailPersonal">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                </div>
+
+                <div class="col-xs-12 col-sm-6 w-auto">
+                    <div class="form-group">
+                        <label for="Telefono" class="form-label">Telefono:</label>
+                        <input type="text" name="TelefonoPersonal" id="Telefono" class="form-control" value="@Model.Item1[0].TelefonoPersonal">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-6">
+
+                    <div class="form-group">
+                        <label for="Codigo" class="form-label">Codigo:</label>
+                        <input type="text" name="Codigo" id="Codigo" class="form-control" value="@Model.Item1[0].Codigo">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                </div>
+
+                <div class="col-xs-12 col-sm-6 flex-column">
+                    <label class="form-label" for="inlineFormSelectPref">Preference</label>
+                    <select class="form-control" id="inlineFormSelectPref" name="Genero">
+                        <option value="">Genero</option>
+                        <option value="0" @if (Model.Item1[0].Genero != 1) { <text> selected </text> }> Femenino </option>
+                        <option value="1" @if (Model.Item1[0].Genero == 1) { <text> selected </text> }> Masculino </option>
+                    </select>
+                    <div class="invalid-feedback"></div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-12 flex-column">
+                    <label class="form-label TipoSangre" for="TipoSangre">Tipo de Sangre</label>
+                    <select class="selectpicker" select data-live-search="true" data-live-search-style="startsWith" id="TipoSangre" name="TipoSangre">
+                        <option value="" disabled>Tipo de sangre</option>
+                        <option value="O+" @if (Model.Item1[0].TipoSangre == "O+") { <text> selected</text> }>O+</option>
+                        <option value="O-" @if (Model.Item1[0].TipoSangre == "O-") { <text> selected</text> }>O-</option>
+                        <option value="A+" @if (Model.Item1[0].TipoSangre == "A+") { <text> selected</text> }>A+</option>
+                        <option value="A-" @if (Model.Item1[0].TipoSangre == "A-") { <text> selected</text> }>A-</option>
+                        <option value="B+" @if (Model.Item1[0].TipoSangre == "B+") { <text> selected</text> }>B+</option>
+                        <option value="B-" @if (Model.Item1[0].TipoSangre == "B-") { <text> selected</text> }>B-</option>
+                        <option value="AB+" @if (Model.Item1[0].TipoSangre == "AB+") { <text> selected</text> }>AB+</option>
+                        <option value="AB-" @if (Model.Item1[0].TipoSangre == "AB-") { <text> selected</text> }>AB-</option>
+                    </select>
+                    <div class="invalid-feedback"></div>
+                </div>
+
+            </div>
+
+            <hr style="border: 2px solid #D9D9D9;" />
+
+            <h5 class="text-info" style="font-weight: bold;">Datos Laborales</h5>
+
+
+            <div class="row my-2">
+
+                <div class="col-xs-12 col-sm-6 w-auto">
+
+                    <div class="form-group flex-column">
+                        <label for="FechaInicio" class="form-label">Fecha de Inicio de Contrato:</label>
+                        @*<input type="date" name="FechaInicio" id="FechaInicio" value="@Model.Item1[0].FechaInicio?.ToString("yyyy-MM-dd")" class="form-control" />*@
+                        <input type="date" name="FechaInicio" id="FechaInicio" value="@((Model.Item1[0].FechaInicio.HasValue) ? Model.Item1[0].FechaInicio.Value.ToString("yyyy-MM-dd") : "")" class="form-control" />
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                </div>
+
+                <div class="col-xs-12 col-sm-6 w-auto">
+
+                    <div class="form-group flex-column">
+                        <label for="FechaFin" class="form-label">Fecha de Fin de Contrato:</label>
+                        @*<input type="date" name="FechaFin" id="daterangepicker" class="form-control" value="@Model.Item1[0].FechaFin?.ToString("yyyy-MM-dd")"/>*@
+                        <input type="date" name="FechaFin" id="daterangepicker" value="@((Model.Item1[0].FechaFin.HasValue) ? Model.Item1[0].FechaFin.Value.ToString("yyyy-MM-dd") : "")" class="form-control" />
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row my-2" style="margin-bottom: 20px;">
+
+                <div class="col-xs-12 col-sm-6 d-flex flex-column">
+                    <label class="form-label" for="TipoSangre">Area:</label>
+                    <select class="selectpicker" data-live-search="true" id="IdArea" name="IdArea">
+                        <option value="" disabled selected>Area</option>
+
+                        @foreach (AreaCargoTipoContrato_VM lista in Model.Item2)
+                        {
+                            foreach (Area_VM a in lista.ListaArea)
+                            {
+                                <option value="@a.IdArea" @(a.NombreArea == Model.Item1[0].NombreArea ? "selected" : "")>@a.NombreArea</option>
+                            }
+                        }
+                        @*@foreach (var area in Model.Item2)
+        {
+            <option value="@area.IdArea">@area.NombreArea</option>
+        }*@
+
+
+                    </select>
+                    <div class="invalid-feedback"></div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 d-flex flex-column">
+                    <label class="form-label" for="TipoContrato">Tipo de contrato:</label>
+                    <select class="selectpicker" data-live-search="true" id="TipoContrato" name="TipoContrato">
+                        <option value="" disabled selected>Tipo de Contrato</option>
+
+                        @foreach (AreaCargoTipoContrato_VM lista in Model.Item2)
+                        {
+                            foreach (TipoContrato_VM tp in lista.ListaTipoContrato)
+                            {
+                                @*<option value="@tp.IdTipoContrato">@tp.NombreTipoContrato</option>*@
+                                <option value="@tp.IdTipoContrato" @(tp.NombreTipoContrato == Model.Item1[0].TipoContrato ? "selected" : "")>@tp.NombreTipoContrato</option>
+                            }
+                        }
+
+
+                    </select>
+                    <div class="invalid-feedback"></div>
+                </div>
+
+            </div>
+
+            <div class="row my-2" style="margin-bottom: 20px;">
+
+                <div class="col-xs-12 col-sm-6 d-flex flex-column">
+                    <label class="form-label" for="Cargo">Cargo:</label>
+                    <select class="selectpicker" data-live-search="true" id="IdCargo" name="IdCargo">
+                        <option value="" disabled selected>Cargo</option>
+
+                        @foreach (AreaCargoTipoContrato_VM lista in Model.Item2)
+                        {
+                            foreach (Cargo_VM c in lista.ListaCargo)
+                            {
+                                <option value="@c.IdCargo" @(c.NombreCargo == Model.Item1[0].NombreCargo ? "selected" : "")>@c.NombreCargo</option>
+                            }
+                        }
+
+                    </select>
+                    <div class="invalid-feedback"></div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 w-auto">
+                    <div class="form-group">
+                        <label for="Salario" class="form-label">Salario:</label>
+                        <input type="number" name="Salario" id="Salario" class="form-control" value="@Model.Item1[0].Salario">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-12 m-t">
+                <button type="button" id="btn-editar" class="btn btn-primary w-100 my-1">Editar</button>
+                @Html.ActionLink("Cancelar", "Empleados_VW", "Empleados", null, new { @class = "btn btn-danger my-1 w-100" })
+
+            </div>
+        </div>
+
+    </form>
+}
+else
+{
+    <h3>Empleado no existe</h3>
+}
+
+
+
+@section scripts{
+
+    <script>
+        var m = '@ViewBag.Message';
+        var alertType = '@ViewBag.AlertType';
+
+
+        $(document).ready(function () {
+            // Mostrar mensaje de error si lo hay
+            if (m != null && m != '') {
+                Swal.fire({
+                    icon: alertType,
+                    title: 'Error',
+                    text: m,
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    m = null; // Limpiar el mensaje de error
+                });
+            }
+        });
+
+    </script>
+    <script type="text/javascript" src="~/Scripts/Empleados/sweetAlertsActualizar.js"></script>
+
+    @* validaciones a los campos de texto JqueryValidation *@
+    <script type="text/javascript" src="~/Scripts/Empleados/jqueryValidationActualizar.js"></script>
+
+    <script>
+        $(document).ready(() => {
+            $('#fotografia').change(function () {
+                const file = this.files[0];
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = function (event) {
+                        console.log(event.target.result);
+                        $('#img').attr('src', event.target.result);
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
+
+}

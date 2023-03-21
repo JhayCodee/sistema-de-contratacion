@@ -1,0 +1,41 @@
+﻿    
+<h1 class="text-center">Lista de empleados</h1>
+
+<div class="table-responsive">
+    <table id="tablaEmpleados" class="table table-striped table-bordered table-hover" width="100%">
+        <thead>
+            <tr>
+                @*<th>Id Empleado</th>*@
+                <th>Código</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Genero</th>
+                <th>Teléfono </th>
+                <th>Correo</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha fin</th>
+                <th>Nombre Area</th>
+                <th>Nombre Cargos</th>
+                <th>Tipo Contrato</th>
+                <th>Salario</th>
+                <th>Fotografia</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+@section scripts{
+    <!-- Configuración de la tabla de empleados -->
+    <script>
+        var editarUrl = '@Url.Action("EditarEmpleados", "Empleados")';
+    </script>
+    <script type="text/javascript" src="~/Scripts/Empleados/datatable.js"></script>
+}

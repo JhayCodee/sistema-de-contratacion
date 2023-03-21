@@ -1,0 +1,101 @@
+﻿body {
+    padding-bottom: 20px;
+    background-color: #F4F4F4;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+form .error {
+    color: red;
+}
+
+input.error {
+    border-color: red;
+}
+
+@media (max-width: 300px) {
+    .imgE {
+        width: 150px;
+    }
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.shadow-custom {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.shadow-h {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.pd {
+    padding: 20px;
+}
+
+.mg {
+    margin: 10px;
+}
+
+.m-t {
+    margin-top: 20px;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/*
+#tablaEmpleados_filter{
+    display: flex;
+    justify-content: end;
+}
+
+#tablaPlanilla_filter 
+{
+    display: flex;
+    justify-content: end;
+}*/
+
+.dt-buttons {
+    margin-bottom: 10px;
+}
+
+.tablaEmpleados {
+    margin: 0;
+}
+
+
+.yellow:hover {
+    color: #D3D700 !important;
+}
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100% !important;
+}
+
+.dropdown-menu {
+    width: 150px !important ;
+}
+
+
+
+.table-responsive {
+    overflow-x: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+}

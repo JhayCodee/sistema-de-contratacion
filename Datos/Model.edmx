@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BD_PRUEBA.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Areas">
+          <Key>
+            <PropertyRef Name="IdArea" />
+          </Key>
+          <Property Name="IdArea" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoArea" Type="nvarchar" MaxLength="16" />
+          <Property Name="NombreArea" Type="nvarchar" MaxLength="100" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cargos">
+          <Key>
+            <PropertyRef Name="IdCargo" />
+          </Key>
+          <Property Name="IdCargo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoCargo" Type="nvarchar" MaxLength="16" />
+          <Property Name="NombreCargo" Type="nvarchar" MaxLength="100" />
+          <Property Name="RangoSalarioInicial" Type="float" />
+          <Property Name="RangoSalarialFinal" Type="float" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contrato">
+          <Key>
+            <PropertyRef Name="IdContrato" />
+          </Key>
+          <Property Name="IdContrato" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpleado" Type="int" Nullable="false" />
+          <Property Name="FechaInicio" Type="date" />
+          <Property Name="FechaFin" Type="date" />
+          <Property Name="IdArea" Type="int" />
+          <Property Name="IdCargo" Type="int" />
+          <Property Name="TipoContrato" Type="int" />
+          <Property Name="EstadoFila" Type="bit" />
+          <Property Name="Salario" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="IdEmpleado" />
+          </Key>
+          <Property Name="IdEmpleado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="Nombres" Type="nvarchar" MaxLength="50" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="50" />
+          <Property Name="Genero" Type="int" />
+          <Property Name="TelefonoPersonal" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailPersonal" Type="nvarchar" MaxLength="50" />
+          <Property Name="TipoSangre" Type="nvarchar" MaxLength="20" />
+          <Property Name="Fotografia" Type="nvarchar" MaxLength="350" />
+        </EntityType>
+        <EntityType Name="TipoContrato">
+          <Key>
+            <PropertyRef Name="IdTipoContrato" />
+          </Key>
+          <Property Name="IdTipoContrato" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreTipoContrato" Type="nvarchar" MaxLength="100" />
+          <Property Name="AplicaAguinaldo" Type="bit" Nullable="false" />
+          <Property Name="AplicaIndemnizacion" Type="bit" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Contrato_Areas">
+          <End Role="Areas" Type="Self.Areas" Multiplicity="0..1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Areas">
+              <PropertyRef Name="IdArea" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="IdArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contrato_Cargos">
+          <End Role="Cargos" Type="Self.Cargos" Multiplicity="0..1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargos">
+              <PropertyRef Name="IdCargo" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="IdCargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contrato_Empleados">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contrato_TipoContrato">
+          <End Role="TipoContrato" Type="Self.TipoContrato" Multiplicity="0..1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoContrato">
+              <PropertyRef Name="IdTipoContrato" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="TipoContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ObtenerEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="contratacion" />
+        <Function Name="Planilla" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="contratacion">
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="BD_PRUEBAStoreContainer">
+          <EntitySet Name="Areas" EntityType="Self.Areas" Schema="contratacion" store:Type="Tables" />
+          <EntitySet Name="Cargos" EntityType="Self.Cargos" Schema="contratacion" store:Type="Tables" />
+          <EntitySet Name="Contrato" EntityType="Self.Contrato" Schema="contratacion" store:Type="Tables" />
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" Schema="contratacion" store:Type="Tables" />
+          <EntitySet Name="TipoContrato" EntityType="Self.TipoContrato" Schema="contratacion" store:Type="Tables" />
+          <AssociationSet Name="FK_Contrato_Areas" Association="Self.FK_Contrato_Areas">
+            <End Role="Areas" EntitySet="Areas" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contrato_Cargos" Association="Self.FK_Contrato_Cargos">
+            <End Role="Cargos" EntitySet="Cargos" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contrato_Empleados" Association="Self.FK_Contrato_Empleados">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contrato_TipoContrato" Association="Self.FK_Contrato_TipoContrato">
+            <End Role="TipoContrato" EntitySet="TipoContrato" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BD_PRUEBA" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Areas">
+          <Key>
+            <PropertyRef Name="IdArea" />
+          </Key>
+          <Property Name="IdArea" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoArea" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="NombreArea" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_Contrato_Areas" FromRole="Areas" ToRole="Contrato" />
+        </EntityType>
+        <EntityType Name="Cargos">
+          <Key>
+            <PropertyRef Name="IdCargo" />
+          </Key>
+          <Property Name="IdCargo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoCargo" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="NombreCargo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RangoSalarioInicial" Type="Double" />
+          <Property Name="RangoSalarialFinal" Type="Double" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_Contrato_Cargos" FromRole="Cargos" ToRole="Contrato" />
+        </EntityType>
+        <EntityType Name="Contrato">
+          <Key>
+            <PropertyRef Name="IdContrato" />
+          </Key>
+          <Property Name="IdContrato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="FechaInicio" Type="DateTime" Precision="0" />
+          <Property Name="FechaFin" Type="DateTime" Precision="0" />
+          <Property Name="IdArea" Type="Int32" />
+          <Property Name="IdCargo" Type="Int32" />
+          <Property Name="TipoContrato" Type="Int32" />
+          <Property Name="EstadoFila" Type="Boolean" />
+          <Property Name="Salario" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Areas" Relationship="Self.FK_Contrato_Areas" FromRole="Contrato" ToRole="Areas" />
+          <NavigationProperty Name="Cargos" Relationship="Self.FK_Contrato_Cargos" FromRole="Contrato" ToRole="Cargos" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK_Contrato_Empleados" FromRole="Contrato" ToRole="Empleados" />
+          <NavigationProperty Name="TipoContrato1" Relationship="Self.FK_Contrato_TipoContrato" FromRole="Contrato" ToRole="TipoContrato" />
+        </EntityType>
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="IdEmpleado" />
+          </Key>
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Genero" Type="Int32" />
+          <Property Name="TelefonoPersonal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailPersonal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TipoSangre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Fotografia" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_Contrato_Empleados" FromRole="Empleados" ToRole="Contrato" />
+        </EntityType>
+        <EntityType Name="TipoContrato">
+          <Key>
+            <PropertyRef Name="IdTipoContrato" />
+          </Key>
+          <Property Name="IdTipoContrato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreTipoContrato" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AplicaAguinaldo" Type="Boolean" Nullable="false" />
+          <Property Name="AplicaIndemnizacion" Type="Boolean" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_Contrato_TipoContrato" FromRole="TipoContrato" ToRole="Contrato" />
+        </EntityType>
+        <Association Name="FK_Contrato_Areas">
+          <End Role="Areas" Type="Self.Areas" Multiplicity="0..1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Areas">
+              <PropertyRef Name="IdArea" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="IdArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contrato_Cargos">
+          <End Role="Cargos" Type="Self.Cargos" Multiplicity="0..1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargos">
+              <PropertyRef Name="IdCargo" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="IdCargo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contrato_Empleados">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contrato_TipoContrato">
+          <End Role="TipoContrato" Type="Self.TipoContrato" Multiplicity="0..1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoContrato">
+              <PropertyRef Name="IdTipoContrato" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="TipoContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Contexto" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Areas" EntityType="Self.Areas" />
+          <EntitySet Name="Cargos" EntityType="Self.Cargos" />
+          <EntitySet Name="Contrato" EntityType="Self.Contrato" />
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" />
+          <EntitySet Name="TipoContrato" EntityType="Self.TipoContrato" />
+          <AssociationSet Name="FK_Contrato_Areas" Association="Self.FK_Contrato_Areas">
+            <End Role="Areas" EntitySet="Areas" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contrato_Cargos" Association="Self.FK_Contrato_Cargos">
+            <End Role="Cargos" EntitySet="Cargos" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contrato_Empleados" Association="Self.FK_Contrato_Empleados">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contrato_TipoContrato" Association="Self.FK_Contrato_TipoContrato">
+            <End Role="TipoContrato" EntitySet="TipoContrato" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <FunctionImport Name="Planilla" ReturnType="Collection(BD_PRUEBA.Planilla_Result)">
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerEmpleados" ReturnType="Collection(BD_PRUEBA.ObtenerEmpleados_Result)" />
+        </EntityContainer>
+        <ComplexType Name="ObtenerDiasTrabajados_Result">
+          <Property Type="String" Name="Codigo_Empleado" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="Nombre_Completo" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Fecha_de_Ingreso" Nullable="true" />
+          <Property Type="Double" Name="Salario_Basico" Nullable="false" />
+          <Property Type="String" Name="TipodeContrato" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="Dias_de_Salario" Nullable="true" />
+          <Property Type="Double" Name="Monto_Salario" Nullable="true" />
+          <Property Type="Double" Name="Antiguedad" Nullable="true" />
+          <Property Type="Double" Name="INSS" Nullable="true" />
+          <Property Type="Double" Name="Total_Neto" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ObtenerDiasTrabajados1_Result">
+          <Property Type="String" Name="Codigo_Empleado" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="Nombre_Completo" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Fecha_de_Ingreso" Nullable="true" />
+          <Property Type="Double" Name="Salario_Basico" Nullable="false" />
+          <Property Type="String" Name="TipodeContrato" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="Dias_de_Salario" Nullable="true" />
+          <Property Type="Double" Name="Monto_Salario" Nullable="true" />
+          <Property Type="Double" Name="Antiguedad" Nullable="true" />
+          <Property Type="Double" Name="INSS" Nullable="true" />
+          <Property Type="Double" Name="Total_Neto" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Planilla_Result">
+          <Property Type="String" Name="Codigo_Empleado" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="Nombre_Completo" Nullable="true" MaxLength="101" />
+          <Property Type="DateTime" Name="Fecha_de_Ingreso" Nullable="true" />
+          <Property Type="String" Name="TipodeContrato" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Salario_Basico" Nullable="false" />
+          <Property Type="Int32" Name="Dias_de_Salario" Nullable="true" />
+          <Property Type="Double" Name="Monto_Salario" Nullable="true" />
+          <Property Type="Double" Name="Antiguedad" Nullable="true" />
+          <Property Type="Double" Name="INSS" Nullable="true" />
+          <Property Type="Double" Name="Total_Neto" Nullable="true" />
+          <Property Type="Double" Name="IR_Mensual" Nullable="true" />
+          <Property Type="Double" Name="Ingresos_Netos" Nullable="true" />
+          <Property Type="String" Name="NombreArea" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Cargo" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="ObtenerEmpleados_Result">
+          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="6" />
+          <Property Type="Int32" Name="Genero" Nullable="true" />
+          <Property Type="String" Name="TelefonoPersonal" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EmailPersonal" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaInicio" Nullable="true" />
+          <Property Type="DateTime" Name="FechaFin" Nullable="true" />
+          <Property Type="String" Name="NombreArea" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="NombreCargo" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Salario" Nullable="false" />
+          <Property Type="String" Name="Fotografia" Nullable="true" MaxLength="350" />
+          <Property Type="String" Name="TipoContrato" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="IdEmpleado" Nullable="false" />
+          <Property Type="String" Name="Nombres" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Apellidos" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TipoSangre" Nullable="true" MaxLength="20" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BD_PRUEBAStoreContainer" CdmEntityContainer="Contexto">
+          <EntitySetMapping Name="Areas">
+            <EntityTypeMapping TypeName="BD_PRUEBA.Areas">
+              <MappingFragment StoreEntitySet="Areas">
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="CodigoArea" ColumnName="CodigoArea" />
+                <ScalarProperty Name="NombreArea" ColumnName="NombreArea" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cargos">
+            <EntityTypeMapping TypeName="BD_PRUEBA.Cargos">
+              <MappingFragment StoreEntitySet="Cargos">
+                <ScalarProperty Name="IdCargo" ColumnName="IdCargo" />
+                <ScalarProperty Name="CodigoCargo" ColumnName="CodigoCargo" />
+                <ScalarProperty Name="NombreCargo" ColumnName="NombreCargo" />
+                <ScalarProperty Name="RangoSalarioInicial" ColumnName="RangoSalarioInicial" />
+                <ScalarProperty Name="RangoSalarialFinal" ColumnName="RangoSalarialFinal" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contrato">
+            <EntityTypeMapping TypeName="BD_PRUEBA.Contrato">
+              <MappingFragment StoreEntitySet="Contrato">
+                <ScalarProperty Name="IdContrato" ColumnName="IdContrato" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="IdCargo" ColumnName="IdCargo" />
+                <ScalarProperty Name="TipoContrato" ColumnName="TipoContrato" />
+                <ScalarProperty Name="EstadoFila" ColumnName="EstadoFila" />
+                <ScalarProperty Name="Salario" ColumnName="Salario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleados">
+            <EntityTypeMapping TypeName="BD_PRUEBA.Empleados">
+              <MappingFragment StoreEntitySet="Empleados">
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="TelefonoPersonal" ColumnName="TelefonoPersonal" />
+                <ScalarProperty Name="EmailPersonal" ColumnName="EmailPersonal" />
+                <ScalarProperty Name="TipoSangre" ColumnName="TipoSangre" />
+                <ScalarProperty Name="Fotografia" ColumnName="Fotografia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoContrato">
+            <EntityTypeMapping TypeName="BD_PRUEBA.TipoContrato">
+              <MappingFragment StoreEntitySet="TipoContrato">
+                <ScalarProperty Name="IdTipoContrato" ColumnName="IdTipoContrato" />
+                <ScalarProperty Name="NombreTipoContrato" ColumnName="NombreTipoContrato" />
+                <ScalarProperty Name="AplicaAguinaldo" ColumnName="AplicaAguinaldo" />
+                <ScalarProperty Name="AplicaIndemnizacion" ColumnName="AplicaIndemnizacion" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Planilla" FunctionName="BD_PRUEBA.Store.Planilla">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BD_PRUEBA.Planilla_Result">
+                <ScalarProperty Name="Codigo_Empleado" ColumnName="Codigo Empleado" />
+                <ScalarProperty Name="Nombre_Completo" ColumnName="Nombre Completo" />
+                <ScalarProperty Name="Fecha_de_Ingreso" ColumnName="Fecha de Ingreso" />
+                <ScalarProperty Name="TipodeContrato" ColumnName="TipodeContrato" />
+                <ScalarProperty Name="Salario_Basico" ColumnName="Salario Basico" />
+                <ScalarProperty Name="Dias_de_Salario" ColumnName="Dias de Salario" />
+                <ScalarProperty Name="Monto_Salario" ColumnName="Monto Salario" />
+                <ScalarProperty Name="Antiguedad" ColumnName="Antiguedad" />
+                <ScalarProperty Name="INSS" ColumnName="INSS" />
+                <ScalarProperty Name="Total_Neto" ColumnName="Total Neto" />
+                <ScalarProperty Name="IR_Mensual" ColumnName="IR Mensual" />
+                <ScalarProperty Name="Ingresos_Netos" ColumnName="Ingresos Netos" />
+                <ScalarProperty Name="NombreArea" ColumnName="NombreArea" />
+                <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerEmpleados" FunctionName="BD_PRUEBA.Store.ObtenerEmpleados">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BD_PRUEBA.ObtenerEmpleados_Result">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="TelefonoPersonal" ColumnName="TelefonoPersonal" />
+                <ScalarProperty Name="EmailPersonal" ColumnName="EmailPersonal" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="NombreArea" ColumnName="NombreArea" />
+                <ScalarProperty Name="NombreCargo" ColumnName="NombreCargo" />
+                <ScalarProperty Name="Salario" ColumnName="Salario" />
+                <ScalarProperty Name="Fotografia" ColumnName="Fotografia" />
+                <ScalarProperty Name="TipoContrato" ColumnName="TipoContrato" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="TipoSangre" ColumnName="TipoSangre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

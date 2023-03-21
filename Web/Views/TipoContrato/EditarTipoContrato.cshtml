@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "EditarTipoContrato";
+}
+
+@if (Model != null)
+{
+
+    <h2 class="text-center text-info shadow-h pd">Editar Area</h2>
+
+    <form id="miFormularioTPE" method="post" action="@Url.Action("EditarTipoContrato", "TipoContrato")">
+
+        <input type="hidden" value="@Model.IdTipoContrato" name="IdTipoContrato" id="id" />
+
+        <div class="shadow-custom pd m-t">
+
+            <div class="row my-2">
+
+                <div class="col-xs-12 col-sm-6 w-auto">
+                    <div class="form-group">
+                        <label for="Nombre" class="form-label">Nombre tipo contrato:</label>
+                        <input type="text" name="NombreTipoContrato" id="Nombre" class="form-control" value="@Model.NombreTipoContrato">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 w-auto">
+                    <div class="form-group">
+                        <label for="" class="form-label">Aplica Aguinaldo:</label>
+                        <div style="display:flex; gap:10px;">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="AplicaAguinaldo" id="optionsRadios1" value="true" @(Model.AplicaAguinaldo == true ? "checked='checked'" : "")>
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio" style="display:flex; align-items:center; margin:0;">
+                                <label>
+                                    <input type="radio" name="AplicaAguinaldo" id="optionsRadios2" value="false" @(Model.AplicaAguinaldo == false ? "checked='checked'" : "")>
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="shadow-custom pd m-t">
+
+                <div class="row my-2">
+
+                    <div class="col-xs-12 col-sm-6 w-auto">
+                        <div class="form-group">
+                            <label for="" class="form-label">Aplica Indemnizacion:</label>
+                            <div style="display:flex; gap:10px;">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="AplicaIndemnizacion" id="optionsRadios1" value="true" @(Model.AplicaIndemnizacion == true ? "checked='checked'" : "")>
+                                        Si
+                                    </label>
+                                </div>
+                                <div class="radio" style="display:flex; align-items:center; margin:0;">
+                                    <label>
+                                        <input type="radio" name="AplicaIndemnizacion" id="optionsRadios2" value="false" @(Model.AplicaIndemnizacion == false ? "checked='checked'" : "")>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 w-auto">
+                        <div class="form-group">
+                            <label for="" class="form-label">Activo:</label>
+                            <div style="display:flex; gap:10px;">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="Activo" id="optionsRadios1" value="true" @(Model.Activo == true ? "checked='checked'" : "")>
+                                        Si
+                                    </label>
+                                </div>
+                                <div class="radio" style="display:flex; align-items:center; margin:0;">
+                                    <label>
+                                        <input type="radio" name="Activo" id="optionsRadios2" value="false" @(Model.Activo == false ? "checked='checked'" : "")>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col-12" style="margin-top:20px;">
+                    <button type="button" id="editbtp" class="btn btn-primary my-1 w-100">Editar</button>
+                    @Html.ActionLink("Cancelar", "Index", "TipoContrato", null, new { @class = "btn btn-danger my-1 w-100" })
+                </div>
+
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <p>Area no existe</p>
+}
+
+
+@section scripts{
+    @* Muestra las alertas al agregar un empleado *@
+
+
+    <script>
+        var mtpe = '@ViewBag.Message';
+        var alertType = '@ViewBag.AlertType';
+
+
+        $(document).ready(function () {
+
+            // Mostrar mensaje de error si lo hay
+            if (mtpe != null && mtpe != '') {
+                Swal.fire({
+                    icon: alertType,
+                    title: 'Error',
+                    text: mtpe,
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    mtpe = null; // Limpiar el mensaje de error
+                });
+            }
+        });
+
+    </script>
+
+    <script>
+        $('#editbtp').click(function () {
+            if ($('#miFormularioTPE').valid()) {
+                Swal.fire({
+                    title: 'Actualizar',
+                    text: "Seguro que quieres actualizar esta area?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, actualizar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#miFormularioTPE').submit();
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $("#miFormularioTPE").validate({
+
+            rules: {
+                NombreTipoContrato: {
+                    required: true,
+                    maxlength: 50,
+                    minlength: 2
+                },
+            },
+            messages: {
+                NombreTipoContrato: {
+                    required: "Por favor, ingrese una Nombre de contrato.",
+                    maxlength: "El nombre no puede tener más de {0} caracteres.",
+                    minlength: "El nombre no puede tener menos de 2 caracteres"
+                },
+            },
+        });
+    </script>
+
+}
+
+
+
+

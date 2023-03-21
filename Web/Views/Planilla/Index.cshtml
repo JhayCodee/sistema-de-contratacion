@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center">Planilla</h2>
+
+<form id="fechas" action="@Url.Action("ObtenerDatos", "planilla")" method="post" style="margin-bottom: 2rem; display:flex; gap: 1rem;">
+    <input type="text" name="daterange" value="" class="form-control" style="max-width: 350px;" />
+    <input type="submit" value="Enviar" class="btn btn-default" />
+</form>
+
+
+<table id="tablaPlanilla" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre Completo</th>
+            <th>Fecha Ingreso</th>
+            <th>Salario Basico</th>
+            <th>Tipo Contrato</th>
+            <th>Dias de Salario</th>
+            <th>Monto de Salario</th>
+            <th>Antiguedad</th>
+            <th>INSS</th>
+            @*<th>Total sin IR</th>*@
+            <th>IR Mensual</th>
+            <th>Ingresos Netos</th>
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
+
+@section scripts
+{
+    <script>
+        var Colilla = '@Url.Action("ColillaPdf", "Planilla")';
+        var tpdf = '@Url.Action("ImprimirTodosPdf", "Planilla")';
+
+    </script>
+    <script src="~/Scripts/Planilla/DateRangePicker.js"></script>
+    <script src="~/Scripts/Planilla/Datatable.js"></script>
+}
