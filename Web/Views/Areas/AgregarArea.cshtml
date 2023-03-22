@@ -52,70 +52,9 @@
         var alertType = '@ViewBag.AlertType';
     </script>
 
-    <script>
-        $(document).ready(function () {
-            if (ma != "") {
-                if (alertType == "success") {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Éxito',
-                        text: ma
-                    }).then(function () {
-                        window.location = "/Areas/Index";
-                    });
-                } else if (alertType == "error") {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: ma
-                    });
-                }
-            }
-        });
+    <script src="~/Scripts/Areas/sweetAlertAgregar.js"></script>
 
-    </script>
-
-    <script>
-
-        $("#miFormularioArea").validate({
-
-            rules: {
-                CodigoArea: {
-                    required: true,
-                    maxlength: 16,
-                    minlength: 2,
-                    remote: {
-                        url: '/Areas/ValidarCodigoArea',
-                        type: 'post',
-                        data: {
-                            codigo: function () {
-                                return $('#Codigo').val();
-                            }
-                        }
-                    }
-                },
-                NombreArea: {
-                    required: true,
-                    maxlength: 50,
-                    minlength: 2
-                },
-            },
-            messages: {
-                CodigoArea: {
-                    required: "Por favor, ingrese un codigo.",
-                    maxlength: "El codigo no puede tener más de {0} caracteres.",
-                    minlength: "El nombre no puede tener menos de 2 caracteres",
-                    remote: "El codigo de area ya existe."
-                },
-                NombreArea: {
-                    required: "Por favor, ingrese una Nombre de area.",
-                    maxlength: "El nombre no puede tener más de {0} caracteres.",
-                    minlength: "El nombre no puede tener menos de 2 caracteres"
-                },
-            },
-        });
-
-    </script>
+    <script src="~/Scripts/Areas/jQueryValidationAgregar.js"></script>
 
 
 

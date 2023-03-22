@@ -83,50 +83,9 @@
         var alertType = '@ViewBag.AlertType';
     </script>
 
-    <script>
-        $(document).ready(function () {
-            if (mtp != "") {
-                if (alertType == "success") {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Éxito',
-                        text: mtp
-                    }).then(function () {
-                        window.location = "/TipoContrato/Index";
-                    });
-                } else if (alertType == "error") {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: mtp
-                    });
-                }
-            }
-        });
+    <script src="~/Scripts/TipoContrato/sweetAlertAgregar.js"></script>
 
-    </script>
-
-    <script>
-
-        $("#miFormularioTP").validate({
-
-            rules: {
-                NombreTipoContrato: {
-                    required: true,
-                    maxlength: 50,
-                    minlength: 2
-                },
-            },
-            messages: {
-                NombreTipoContrato: {
-                    required: "Por favor, ingrese una Nombre de contrato.",
-                    maxlength: "El nombre no puede tener más de {0} caracteres.",
-                    minlength: "El nombre no puede tener menos de 2 caracteres"
-                },
-            },
-        });
-
-    </script>
+    <script src="~/Scripts/TipoContrato/jQueryValidatorAgregar.js"></script>
 
 
 
