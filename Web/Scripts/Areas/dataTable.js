@@ -17,7 +17,7 @@
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return '<a href="' + editarUrl + '/' + row.IdArea + '" class="btn btn-primary mx-1">Editar</a>';
+                    return '<a href="' + editarUrl + '/' + row.IdArea + '"  x class="btn btn-primary mx-1">Editar</a>';
                 }
             },
         ],

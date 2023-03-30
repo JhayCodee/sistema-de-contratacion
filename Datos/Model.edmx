@@ -116,6 +116,9 @@
           <Parameter Name="FechaInicio" Type="date" Mode="In" />
           <Parameter Name="FechaFin" Type="date" Mode="In" />
         </Function>
+        <Function Name="spCalcularAguinaldo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="contratacion">
+          <Parameter Name="FinAguinaldo" Type="date" Mode="In" />
+        </Function>
         <EntityContainer Name="BD_PRUEBAStoreContainer">
           <EntitySet Name="Areas" EntityType="Self.Areas" Schema="contratacion" store:Type="Tables" />
           <EntitySet Name="Cargos" EntityType="Self.Cargos" Schema="contratacion" store:Type="Tables" />
@@ -284,6 +287,9 @@
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="ObtenerEmpleados" ReturnType="Collection(BD_PRUEBA.ObtenerEmpleados_Result)" />
+          <FunctionImport Name="spCalcularAguinaldo" ReturnType="Collection(BD_PRUEBA.spCalcularAguinaldo_Result)">
+            <Parameter Name="FinAguinaldo" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ObtenerDiasTrabajados_Result">
           <Property Type="String" Name="Codigo_Empleado" Nullable="false" MaxLength="6" />
@@ -341,6 +347,20 @@
           <Property Type="String" Name="Nombres" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Apellidos" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="TipoSangre" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="spCalcularAguinaldo_Result">
+          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="6" />
+          <Property Type="DateTime" Name="FechaInicio" Nullable="true" />
+          <Property Type="DateTime" Name="FechaFin" Nullable="true" />
+          <Property Type="Double" Name="Salario" Nullable="false" />
+          <Property Type="Double" Name="DiasAguinaldo" Nullable="true" />
+          <Property Type="Double" Name="MontoAguinaldo" Nullable="true" />
+          <Property Type="Double" Name="DiasVacaciones" Nullable="true" />
+          <Property Type="Double" Name="MontoVacaciones" Nullable="true" />
+          <Property Type="Double" Name="TotalProvision" Nullable="true" />
+          <Property Type="String" Name="NombreCompleto" Nullable="false" MaxLength="101" />
+          <Property Type="Double" Name="diasIndem" Nullable="true" />
+          <Property Type="Double" Name="MontoIndem" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -449,6 +469,24 @@
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
                 <ScalarProperty Name="TipoSangre" ColumnName="TipoSangre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spCalcularAguinaldo" FunctionName="BD_PRUEBA.Store.spCalcularAguinaldo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BD_PRUEBA.spCalcularAguinaldo_Result">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="Salario" ColumnName="Salario" />
+                <ScalarProperty Name="DiasAguinaldo" ColumnName="DiasAguinaldo" />
+                <ScalarProperty Name="MontoAguinaldo" ColumnName="MontoAguinaldo" />
+                <ScalarProperty Name="DiasVacaciones" ColumnName="DiasVacaciones" />
+                <ScalarProperty Name="MontoVacaciones" ColumnName="MontoVacaciones" />
+                <ScalarProperty Name="TotalProvision" ColumnName="TotalProvision" />
+                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
+                <ScalarProperty Name="diasIndem" ColumnName="diasIndem" />
+                <ScalarProperty Name="MontoIndem" ColumnName="MontoIndem" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

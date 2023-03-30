@@ -50,5 +50,14 @@ namespace Datos
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerEmpleados_Result>("ObtenerEmpleados");
         }
+    
+        public virtual ObjectResult<spCalcularAguinaldo_Result> spCalcularAguinaldo(Nullable<System.DateTime> finAguinaldo)
+        {
+            var finAguinaldoParameter = finAguinaldo.HasValue ?
+                new ObjectParameter("FinAguinaldo", finAguinaldo) :
+                new ObjectParameter("FinAguinaldo", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spCalcularAguinaldo_Result>("spCalcularAguinaldo", finAguinaldoParameter);
+        }
     }
 }

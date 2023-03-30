@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Prestaciones Sociales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Prestaciones Sociales</h2>
+
+<form id="fechaCorte" action="@Url.Action("ObtenerDatos", "PrestacionesSociales")" method="post" style="margin-bottom: 2rem; display:flex; gap: 1rem;">
+    <input type="text" name="corte" value=""/>
+    <input type="submit" value="Enviar" class="btn btn-default" />
+</form>
+
+<div >
+
+    <table id="tablaPrestaciones" class="table table-bordered table-striped" width="100%">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre Completo</th>
+                <th>Fecha Ingreso</th>
+                <th>Fecha Fin</th>
+                <th>Salario</th>
+                <th>Dias de Aguinaldo 2023</th>
+                <th>Monto Aguinaldo</th>
+                <th>Dias de Vacaciones</th>
+                <th>Monto Vacaciones</th>
+                <th>Dias Indemnizacion</th>
+                <th>Monto Indemnizacion</th>
+                <th>Total Provision</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+    
+    @section scripts {
+        <script src="~/Scripts/PrestacionesSociales/dataTable.js"></script>
+        <script src="~/Scripts/PrestacionesSociales/dateRangePicker.js"></script>
+    }

@@ -49,6 +49,7 @@
     <Compile Include="Empleado_VM.cs" />
     <Compile Include="ObtenerEmpleados_VM.cs" />
     <Compile Include="Planilla_VM.cs" />
+    <Compile Include="PrestacionesSociales_VM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TipoContrato_VM.cs" />
   </ItemGroup>

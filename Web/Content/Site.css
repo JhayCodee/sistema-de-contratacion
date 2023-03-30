@@ -95,7 +95,15 @@ input.error {
 
 
 
+table.dataTable thead .sorting:after {
+    content: none !important;
+}
+
 .table-responsive {
     overflow-x: scroll !important;
     -webkit-overflow-scrolling: touch !important;
+}
+
+.daterangepicker {
+    min-width: 250px !important;
 }
