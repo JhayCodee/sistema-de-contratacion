@@ -32,6 +32,7 @@ namespace Datos
         public virtual DbSet<Contrato> Contrato { get; set; }
         public virtual DbSet<Empleados> Empleados { get; set; }
         public virtual DbSet<TipoContrato> TipoContrato { get; set; }
+        public virtual DbSet<Rangos> Rangos { get; set; }
     
         public virtual ObjectResult<Planilla_Result> Planilla(Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
         {
@@ -58,6 +59,21 @@ namespace Datos
                 new ObjectParameter("FinAguinaldo", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spCalcularAguinaldo_Result>("spCalcularAguinaldo", finAguinaldoParameter);
+        }
+    
+        public virtual ObjectResult<spReportePersonalPorArea_Result> spReportePersonalPorArea()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReportePersonalPorArea_Result>("spReportePersonalPorArea");
+        }
+    
+        public virtual ObjectResult<spReportePersonalXCargo_Result> spReportePersonalXCargo()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReportePersonalXCargo_Result>("spReportePersonalXCargo");
+        }
+    
+        public virtual ObjectResult<spReportePorRangoSalarial_Result> spReportePorRangoSalarial()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReportePorRangoSalarial_Result>("spReportePorRangoSalarial");
         }
     }
 }

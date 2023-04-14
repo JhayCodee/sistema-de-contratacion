@@ -142,6 +142,7 @@
     <Compile Include="Controllers\PlanillaController.cs" />
     <Compile Include="Controllers\PrestacionesSocialesController.cs" />
     <Compile Include="Controllers\pruebaController.cs" />
+    <Compile Include="Controllers\ReportesController.cs" />
     <Compile Include="Controllers\TipoContratoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -371,6 +372,9 @@
     <Content Include="Views\TipoContrato\Index.cshtml" />
     <Content Include="Views\TipoContrato\EditarTipoContrato.cshtml" />
     <Content Include="Views\PrestacionesSociales\Index.cshtml" />
+    <Content Include="Views\Reportes\ReporteArea.cshtml" />
+    <Content Include="Views\Reportes\ReporteCargo.cshtml" />
+    <Content Include="Views\Reportes\ReporteRangoSalarial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

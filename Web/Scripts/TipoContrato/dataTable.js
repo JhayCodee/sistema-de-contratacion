@@ -12,9 +12,36 @@
         columns: [
             //{ "data": "IdEmpleado" },
             { "data": "NombreTipoContrato" },
-            { "data": "AplicaAguinaldo" },
-            { "data": "AplicaIndemnizacion" },
-            { "data": "Activo" },
+            {
+                "data": "AplicaAguinaldo",
+                "render": function (data, type, row) {
+                    if (row.Activo == true) {
+                        return "Si";
+                    } else {
+                        return "No"
+                    }
+                }
+            },
+            {
+                "data": "AplicaIndemnizacion",
+                "render": function (data, type, row) {
+                    if (row.Activo == true) {
+                        return "Si";
+                    } else {
+                        return "No"
+                    }
+                }
+            },
+            {
+                "data": "Activo",
+                "render": function (data, type, row) {
+                    if (row.Activo == true) {
+                        return "Si";
+                    } else {
+                        return "No"
+                    }
+                }
+            },
             {
                 "data": null,
                 "render": function (data, type, row) {

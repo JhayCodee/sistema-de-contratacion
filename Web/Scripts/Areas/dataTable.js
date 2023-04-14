@@ -13,7 +13,16 @@
             //{ "data": "IdEmpleado" },
             { "data": "CodigoArea" },
             { "data": "NombreArea" },
-            { "data": "Activo" },
+            {
+                "data": "Activo",
+                "render": function (data, type, row) {
+                    if (row.Activo == true) {
+                        return "Si";
+                    } else {
+                        return "No"
+                    }
+                }
+            },
             {
                 "data": null,
                 "render": function (data, type, row) {

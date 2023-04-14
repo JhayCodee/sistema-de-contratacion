@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Reportes Rango Salarial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Reporte de personal por Rango Salarial</h2>
+
+<table id="tablaPersonalArea" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Rango</th>
+            <th>Hombre</th>
+            <th>Mujeres</th>
+            <th>Total EMpleados</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+
+            $('#tablaPersonalArea').DataTable({
+
+                ajax: {
+                    "url": "/Reportes/GetPersonalPorRangoSalarial",
+                    "type": "GET",
+                },
+                dom: "<'row'<'col-md-12'B>>" + "<'row'<'col-md-6'l><'col-md-6'f>>" + "<'row'<'col-md-12'tr>>" + "<'row'<'col-md-5'i><'col-md-7'p>>",
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "TODOS"]],
+                pageLength: 10,
+                columns: [
+                    //{ "data": "IdEmpleado" },
+                    { "data": "Rango" },
+                    { "data": "Hombres" },
+                    { "data": "Mujeres" },
+                    { "data": "TotalEmpleados" },
+                ],
+                language: {
+                    lengthMenu: "MOSTRAR _MENU_ REGISTROS",
+                    noData: "No hay información para mostrar.",
+                    sProcessing: "Procesando...",
+                    sLengthMenu: "Mostrar _MENU_ registros",
+                    sZeroRecords: "No se encontraron resultados",
+                    sEmptyTable: "Ningún dato disponible en esta tabla",
+                    sInfo: "_START_ al _END_ / total _TOTAL_",
+                    sInfoEmpty: "0 al 0 de 0 registros",
+                    sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                    sInfoPostFix: "",
+                    sSearch: "Buscar:",
+                    sUrl: "",
+                    sInfoThousands: ",",
+                    sLoadingRecords: "Cargando...",
+                    oPaginate: {
+                        sFirst: "Primero",
+                        sLast: "Último",
+                        sNext: "Siguiente",
+                        sPrevious: "Anterior"
+                    },
+                    oAria: {
+                        sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+                        sSortDescending: ": Activar para ordenar la columna de manera descendente"
+                    },
+                },
+                buttons: [
+                    {
+                        extend: "excel",
+                        text: "Excel",
+                        titleAttr: 'Exportar datos a excel'
+                    },
+
+                ]
+
+            });
+
+
+        });
+
+    </script>
+}

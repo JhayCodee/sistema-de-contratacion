@@ -55,6 +55,7 @@
     <Compile Include="Planilla_LN.cs" />
     <Compile Include="PrestacionesSociales_LN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reportes_LN.cs" />
     <Compile Include="TipoContrato_LN.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -48,6 +48,9 @@
     <Compile Include="Contrato_VM.cs" />
     <Compile Include="Empleado_VM.cs" />
     <Compile Include="ObtenerEmpleados_VM.cs" />
+    <Compile Include="PersonalPorArea_VM.cs" />
+    <Compile Include="PersonalPorCargo_VM.cs" />
+    <Compile Include="PersonalPorRangoSalarial_VM.cs" />
     <Compile Include="Planilla_VM.cs" />
     <Compile Include="PrestacionesSociales_VM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

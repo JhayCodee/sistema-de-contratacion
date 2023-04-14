@@ -63,6 +63,15 @@
           <Property Name="AplicaIndemnizacion" Type="bit" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Rangos">
+          <Key>
+            <PropertyRef Name="RangoId" />
+          </Key>
+          <Property Name="RangoId" Type="int" Nullable="false" />
+          <Property Name="RangoInicio" Type="int" />
+          <Property Name="RangoFin" Type="int" />
+          <Property Name="RangoTexto" Type="varchar" MaxLength="20" />
+        </EntityType>
         <Association Name="FK_Contrato_Areas">
           <End Role="Areas" Type="Self.Areas" Multiplicity="0..1" />
           <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
@@ -119,12 +128,16 @@
         <Function Name="spCalcularAguinaldo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="contratacion">
           <Parameter Name="FinAguinaldo" Type="date" Mode="In" />
         </Function>
+        <Function Name="spReportePersonalPorArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="contratacion" />
+        <Function Name="spReportePersonalXCargo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="contratacion" />
+        <Function Name="spReportePorRangoSalarial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="contratacion" />
         <EntityContainer Name="BD_PRUEBAStoreContainer">
           <EntitySet Name="Areas" EntityType="Self.Areas" Schema="contratacion" store:Type="Tables" />
           <EntitySet Name="Cargos" EntityType="Self.Cargos" Schema="contratacion" store:Type="Tables" />
           <EntitySet Name="Contrato" EntityType="Self.Contrato" Schema="contratacion" store:Type="Tables" />
           <EntitySet Name="Empleados" EntityType="Self.Empleados" Schema="contratacion" store:Type="Tables" />
           <EntitySet Name="TipoContrato" EntityType="Self.TipoContrato" Schema="contratacion" store:Type="Tables" />
+          <EntitySet Name="Rangos" EntityType="Self.Rangos" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Contrato_Areas" Association="Self.FK_Contrato_Areas">
             <End Role="Areas" EntitySet="Areas" />
             <End Role="Contrato" EntitySet="Contrato" />
@@ -288,8 +301,12 @@
           </FunctionImport>
           <FunctionImport Name="ObtenerEmpleados" ReturnType="Collection(BD_PRUEBA.ObtenerEmpleados_Result)" />
           <FunctionImport Name="spCalcularAguinaldo" ReturnType="Collection(BD_PRUEBA.spCalcularAguinaldo_Result)">
-            <Parameter Name="FinAguinaldo" Mode="In" Type="DateTime" />
+          <Parameter Name="FinAguinaldo" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="Rangos" EntityType="BD_PRUEBA.Rangos" />
+          <FunctionImport Name="spReportePersonalPorArea" ReturnType="Collection(BD_PRUEBA.spReportePersonalPorArea_Result)" />
+          <FunctionImport Name="spReportePersonalXCargo" ReturnType="Collection(BD_PRUEBA.spReportePersonalXCargo_Result)" />
+          <FunctionImport Name="spReportePorRangoSalarial" ReturnType="Collection(BD_PRUEBA.spReportePorRangoSalarial_Result)" />
         </EntityContainer>
         <ComplexType Name="ObtenerDiasTrabajados_Result">
           <Property Type="String" Name="Codigo_Empleado" Nullable="false" MaxLength="6" />
@@ -361,6 +378,35 @@
           <Property Type="String" Name="NombreCompleto" Nullable="false" MaxLength="101" />
           <Property Type="Double" Name="diasIndem" Nullable="true" />
           <Property Type="Double" Name="MontoIndem" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Rangos">
+          <Key>
+            <PropertyRef Name="RangoId" />
+          </Key>
+          <Property Name="RangoId" Type="Int32" Nullable="false" />
+          <Property Name="RangoInicio" Type="Int32" />
+          <Property Name="RangoFin" Type="Int32" />
+          <Property Name="RangoTexto" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="spReportePersonalPorArea_Result">
+          <Property Type="String" Name="NombreArea" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="SumaSalarios" Nullable="true" />
+          <Property Type="Int32" Name="Hombres" Nullable="true" />
+          <Property Type="Int32" Name="Mujeres" Nullable="true" />
+          <Property Type="Int32" Name="TotalEmpleados" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spReportePersonalXCargo_Result">
+          <Property Type="String" Name="NombreCargo" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="SumaSalarios" Nullable="true" />
+          <Property Type="Int32" Name="Hombres" Nullable="true" />
+          <Property Type="Int32" Name="Mujeres" Nullable="true" />
+          <Property Type="Int32" Name="TotalEmpleados" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spReportePorRangoSalarial_Result">
+          <Property Type="String" Name="Rango" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Hombres" Nullable="true" />
+          <Property Type="Int32" Name="Mujeres" Nullable="true" />
+          <Property Type="Int32" Name="TotalEmpleados" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -487,6 +533,48 @@
                 <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
                 <ScalarProperty Name="diasIndem" ColumnName="diasIndem" />
                 <ScalarProperty Name="MontoIndem" ColumnName="MontoIndem" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Rangos">
+            <EntityTypeMapping TypeName="BD_PRUEBA.Rangos">
+              <MappingFragment StoreEntitySet="Rangos">
+                <ScalarProperty Name="RangoTexto" ColumnName="RangoTexto" />
+                <ScalarProperty Name="RangoFin" ColumnName="RangoFin" />
+                <ScalarProperty Name="RangoInicio" ColumnName="RangoInicio" />
+                <ScalarProperty Name="RangoId" ColumnName="RangoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spReportePersonalPorArea" FunctionName="BD_PRUEBA.Store.spReportePersonalPorArea">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BD_PRUEBA.spReportePersonalPorArea_Result">
+                <ScalarProperty Name="NombreArea" ColumnName="NombreArea" />
+                <ScalarProperty Name="SumaSalarios" ColumnName="SumaSalarios" />
+                <ScalarProperty Name="Hombres" ColumnName="Hombres" />
+                <ScalarProperty Name="Mujeres" ColumnName="Mujeres" />
+                <ScalarProperty Name="TotalEmpleados" ColumnName="TotalEmpleados" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spReportePersonalXCargo" FunctionName="BD_PRUEBA.Store.spReportePersonalXCargo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BD_PRUEBA.spReportePersonalXCargo_Result">
+                <ScalarProperty Name="NombreCargo" ColumnName="NombreCargo" />
+                <ScalarProperty Name="SumaSalarios" ColumnName="SumaSalarios" />
+                <ScalarProperty Name="Hombres" ColumnName="Hombres" />
+                <ScalarProperty Name="Mujeres" ColumnName="Mujeres" />
+                <ScalarProperty Name="TotalEmpleados" ColumnName="TotalEmpleados" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spReportePorRangoSalarial" FunctionName="BD_PRUEBA.Store.spReportePorRangoSalarial">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BD_PRUEBA.spReportePorRangoSalarial_Result">
+                <ScalarProperty Name="Rango" ColumnName="Rango" />
+                <ScalarProperty Name="Hombres" ColumnName="Hombres" />
+                <ScalarProperty Name="Mujeres" ColumnName="Mujeres" />
+                <ScalarProperty Name="TotalEmpleados" ColumnName="TotalEmpleados" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
