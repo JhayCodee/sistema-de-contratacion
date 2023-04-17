@@ -1,10 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "Reportes Rango Salarial";
+    ViewBag.Title = "Reporte por Edad";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center">Reporte de personal por Rango Salarial</h2>
+<h2 class="text-center">Reporte de personal por Edad</h2>
 
 <table id="tablaPersonalArea" class="table table-bordered table-striped">
     <thead>
@@ -12,7 +12,7 @@
             <th>Rango</th>
             <th>Hombre</th>
             <th>Mujeres</th>
-            <th>Total EMpleados</th>
+            <th>Total Empleados</th>
         </tr>
     </thead>
     <tbody>
@@ -23,14 +23,10 @@
     <script>
         $(document).ready(function () {
 
-            fetch('/Reportes/GetRangoSalarialLINQ')
-                .then(response => response.json())
-                .then(data => console.log(data));
-
             $('#tablaPersonalArea').DataTable({
 
                 ajax: {
-                    "url": "/Reportes/GetRangoSalarialLINQ",
+                    "url": "/Reportes/GetPersonalPorEdad",
                     "type": "GET",
                 },
                 dom: "<'row'<'col-md-12'B>>" + "<'row'<'col-md-6'l><'col-md-6'f>>" + "<'row'<'col-md-12'tr>>" + "<'row'<'col-md-5'i><'col-md-7'p>>",
@@ -38,7 +34,7 @@
                 pageLength: 10,
                 columns: [
                     //{ "data": "IdEmpleado" },
-                    { "data": "Rango" },
+                    { "data": "RangoAniosContrato" },
                     { "data": "Hombres" },
                     { "data": "Mujeres" },
                     { "data": "TotalEmpleados" },

@@ -32,6 +32,10 @@ namespace Web.Controllers
         {
             return View();
         }
+        public ActionResult ReportePorEdad()
+        {
+            return View();
+        }
 
         [HttpGet]
         public ActionResult GetPersonalPorArea()
@@ -54,6 +58,22 @@ namespace Web.Controllers
         {
             List<PersonalPorRangoSalarial_VM> lista = new List<PersonalPorRangoSalarial_VM>();
             lista = LnReportes.ObtenerPersonalPorRangoSalarial();
+            return Json(new { data = lista }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetPersonalPorEdad()
+        {
+            List<PersonalPorEdad_VM> lista = new List<PersonalPorEdad_VM>();
+            lista = LnReportes.ObtenerPersonalPorEdad();
+            return Json(new { data = lista }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetRangoSalarialLINQ()
+        {
+            List<PersonalPorRangoSalarial_VM> lista = new List<PersonalPorRangoSalarial_VM>();
+            lista = LnReportes.ObtenerRangoSalarialLINQ();
             return Json(new { data = lista }, JsonRequestBehavior.AllowGet);
         }
     }

@@ -94,10 +94,16 @@
     <Compile Include="Rangos.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="RangosContrato.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="spCalcularAguinaldo_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="spReportePersonalPorArea_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spReportePersonalPorEdad_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="spReportePersonalXCargo_Result.cs">

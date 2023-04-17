@@ -72,6 +72,15 @@
           <Property Name="RangoFin" Type="int" />
           <Property Name="RangoTexto" Type="varchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="RangosContrato">
+          <Key>
+            <PropertyRef Name="IdRango" />
+          </Key>
+          <Property Name="IdRango" Type="int" Nullable="false" />
+          <Property Name="RangoTexto" Type="varchar" MaxLength="20" />
+          <Property Name="RangoInicio" Type="int" />
+          <Property Name="RangoFin" Type="int" />
+        </EntityType>
         <Association Name="FK_Contrato_Areas">
           <End Role="Areas" Type="Self.Areas" Multiplicity="0..1" />
           <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
@@ -129,6 +138,7 @@
           <Parameter Name="FinAguinaldo" Type="date" Mode="In" />
         </Function>
         <Function Name="spReportePersonalPorArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="contratacion" />
+        <Function Name="spReportePersonalPorEdad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="contratacion" />
         <Function Name="spReportePersonalXCargo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="contratacion" />
         <Function Name="spReportePorRangoSalarial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="contratacion" />
         <EntityContainer Name="BD_PRUEBAStoreContainer">
@@ -138,6 +148,7 @@
           <EntitySet Name="Empleados" EntityType="Self.Empleados" Schema="contratacion" store:Type="Tables" />
           <EntitySet Name="TipoContrato" EntityType="Self.TipoContrato" Schema="contratacion" store:Type="Tables" />
           <EntitySet Name="Rangos" EntityType="Self.Rangos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RangosContrato" EntityType="Self.RangosContrato" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Contrato_Areas" Association="Self.FK_Contrato_Areas">
             <End Role="Areas" EntitySet="Areas" />
             <End Role="Contrato" EntitySet="Contrato" />
@@ -307,6 +318,8 @@
           <FunctionImport Name="spReportePersonalPorArea" ReturnType="Collection(BD_PRUEBA.spReportePersonalPorArea_Result)" />
           <FunctionImport Name="spReportePersonalXCargo" ReturnType="Collection(BD_PRUEBA.spReportePersonalXCargo_Result)" />
           <FunctionImport Name="spReportePorRangoSalarial" ReturnType="Collection(BD_PRUEBA.spReportePorRangoSalarial_Result)" />
+          <EntitySet Name="RangosContrato" EntityType="BD_PRUEBA.RangosContrato" />
+          <FunctionImport Name="spReportePersonalPorEdad" ReturnType="Collection(BD_PRUEBA.spReportePersonalPorEdad_Result)" />
         </EntityContainer>
         <ComplexType Name="ObtenerDiasTrabajados_Result">
           <Property Type="String" Name="Codigo_Empleado" Nullable="false" MaxLength="6" />
@@ -404,6 +417,21 @@
         </ComplexType>
         <ComplexType Name="spReportePorRangoSalarial_Result">
           <Property Type="String" Name="Rango" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Hombres" Nullable="true" />
+          <Property Type="Int32" Name="Mujeres" Nullable="true" />
+          <Property Type="Int32" Name="TotalEmpleados" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="RangosContrato">
+          <Key>
+            <PropertyRef Name="IdRango" />
+          </Key>
+          <Property Name="IdRango" Type="Int32" Nullable="false" />
+          <Property Name="RangoTexto" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RangoInicio" Type="Int32" />
+          <Property Name="RangoFin" Type="Int32" />
+        </EntityType>
+        <ComplexType Name="spReportePersonalPorEdad_Result">
+          <Property Type="String" Name="RangoAniosContrato" Nullable="true" MaxLength="20" />
           <Property Type="Int32" Name="Hombres" Nullable="true" />
           <Property Type="Int32" Name="Mujeres" Nullable="true" />
           <Property Type="Int32" Name="TotalEmpleados" Nullable="true" />
@@ -572,6 +600,26 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="BD_PRUEBA.spReportePorRangoSalarial_Result">
                 <ScalarProperty Name="Rango" ColumnName="Rango" />
+                <ScalarProperty Name="Hombres" ColumnName="Hombres" />
+                <ScalarProperty Name="Mujeres" ColumnName="Mujeres" />
+                <ScalarProperty Name="TotalEmpleados" ColumnName="TotalEmpleados" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="RangosContrato">
+            <EntityTypeMapping TypeName="BD_PRUEBA.RangosContrato">
+              <MappingFragment StoreEntitySet="RangosContrato">
+                <ScalarProperty Name="RangoFin" ColumnName="RangoFin" />
+                <ScalarProperty Name="RangoInicio" ColumnName="RangoInicio" />
+                <ScalarProperty Name="RangoTexto" ColumnName="RangoTexto" />
+                <ScalarProperty Name="IdRango" ColumnName="IdRango" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spReportePersonalPorEdad" FunctionName="BD_PRUEBA.Store.spReportePersonalPorEdad">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BD_PRUEBA.spReportePersonalPorEdad_Result">
+                <ScalarProperty Name="RangoAniosContrato" ColumnName="RangoAniosContrato" />
                 <ScalarProperty Name="Hombres" ColumnName="Hombres" />
                 <ScalarProperty Name="Mujeres" ColumnName="Mujeres" />
                 <ScalarProperty Name="TotalEmpleados" ColumnName="TotalEmpleados" />

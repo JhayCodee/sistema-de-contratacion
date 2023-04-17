@@ -33,6 +33,7 @@ namespace Datos
         public virtual DbSet<Empleados> Empleados { get; set; }
         public virtual DbSet<TipoContrato> TipoContrato { get; set; }
         public virtual DbSet<Rangos> Rangos { get; set; }
+        public virtual DbSet<RangosContrato> RangosContrato { get; set; }
     
         public virtual ObjectResult<Planilla_Result> Planilla(Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
         {
@@ -74,6 +75,11 @@ namespace Datos
         public virtual ObjectResult<spReportePorRangoSalarial_Result> spReportePorRangoSalarial()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReportePorRangoSalarial_Result>("spReportePorRangoSalarial");
+        }
+    
+        public virtual ObjectResult<spReportePersonalPorEdad_Result> spReportePersonalPorEdad()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReportePersonalPorEdad_Result>("spReportePersonalPorEdad");
         }
     }
 }

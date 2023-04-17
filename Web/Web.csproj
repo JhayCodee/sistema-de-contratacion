@@ -375,6 +375,7 @@
     <Content Include="Views\Reportes\ReporteArea.cshtml" />
     <Content Include="Views\Reportes\ReporteCargo.cshtml" />
     <Content Include="Views\Reportes\ReporteRangoSalarial.cshtml" />
+    <Content Include="Views\Reportes\ReportePorEdad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

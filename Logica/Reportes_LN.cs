@@ -71,5 +71,45 @@ namespace Logica
             return lista;
         }
 
+        public List<PersonalPorRangoSalarial_VM> ObtenerRangoSalarialLINQ()
+        {
+            var res = from c in _bd.Contrato
+                      join e in _bd.Empleados on c.IdEmpleado equals e.IdEmpleado
+                      let rangoSalario = (c.Salario >= 0 && c.Salario <= 10000) ? "0 - 10000"
+                                           : (c.Salario >= 10001 && c.Salario <= 20000) ? "10001 - 20000"
+                                           : (c.Salario >= 20001 && c.Salario <= 30000) ? "20001 - 30000"
+                                           : (c.Salario >= 30001 && c.Salario <= 40000) ? "30001 - 40000"
+                                           : "40001 - mas"
+                      where c.EstadoFila == true
+                      group e by rangoSalario into g
+                      select new PersonalPorRangoSalarial_VM
+                      {
+                          Rango = g.Key,
+                          Hombres = g.Count(h => h.Genero == 1),
+                          Mujeres = g.Count(m => m.Genero == 0 || m.Genero == 2),
+                          TotalEmpleados = g.Count()
+                      };
+
+            return res.ToList();
+        }
+
+
+
+        public List<PersonalPorEdad_VM> ObtenerPersonalPorEdad()
+        {
+            List<PersonalPorEdad_VM> lista = new List<PersonalPorEdad_VM>();
+
+            lista = _bd.spReportePersonalPorEdad()
+            .Select(i => new PersonalPorEdad_VM
+            {
+                RangoAniosContrato = i.RangoAniosContrato,
+                Hombres = i.Hombres,
+                Mujeres = i.Mujeres,
+                TotalEmpleados = i.TotalEmpleados
+            }).ToList();
+
+            return lista;
+        }
+
     }
 }

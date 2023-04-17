@@ -15,6 +15,7 @@
         <AssociationConnector Association="BD_PRUEBA.FK_Contrato_Empleados" ManuallyRouted="false" />
         <AssociationConnector Association="BD_PRUEBA.FK_Contrato_TipoContrato" ManuallyRouted="false" />
         <EntityTypeShape EntityType="BD_PRUEBA.Rangos" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="BD_PRUEBA.RangosContrato" Width="1.5" PointX="5.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
